@@ -12,32 +12,32 @@ class Form extends Component {
                 email: '',
                 password: ''
             },
-			formRules: [
-				{
-					id: 1,
-					field: 'username',
-					name: 'Username must be greater than 5 characters.',
-					valid: false
-				},
-				{
-					id: 2,
-					field: 'email',
-					name: 'Email must be greater than 5 characters.',
-					valid: false
-				},
-				{
-					id: 3,
-					field: 'email',
-					name: 'Email must be a valid email address.',
-					valid: false
-				},
-				{
-					id: 4,
-					field: 'password',
-					name: 'Password must be greater than 10 characters.',
-					valid: false
-				}
-			],
+            formRules: [
+                {
+                    id: 1,
+                    field: 'username',
+                    name: 'Username must be greater than 5 characters.',
+                    valid: false
+                },
+                {
+                    id: 2,
+                    field: 'email',
+                    name: 'Email must be greater than 5 characters.',
+                    valid: false
+                },
+                {
+                    id: 3,
+                    field: 'email',
+                    name: 'Email must be a valid email address.',
+                    valid: false
+                },
+                {
+                    id: 4,
+                    field: 'password',
+                    name: 'Password must be greater than 10 characters.',
+                    valid: false
+                }
+            ],
             valid: false
         }
         this.handleUserFormSubmit = this.handleUserFormSubmit.bind(this);
@@ -48,45 +48,45 @@ class Form extends Component {
     componentWillReceiveProps(nextProps) {
         if (this.props.formType !== nextProps.formType) {
             this.clearForm();
-			this.initRules();
+            this.initRules();
         }
     }
-	allTrue() {
-		for (const rule of this.state.formRules) {
-			if (!rule.valid) return false;
-		}
-		return true;
-	}
-	validateEmail(email) {
-		// eslint-disable-next-line
-		var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-		return re.test(email);
-	}
-	validateForm() {
-		const formType = this.props.formType;
-		const rules = this.state.formRules;
-		const formData = this.state.formData;
-		this.setState({valid: false});
-		for (const rule of rules) {
-			rule.valid = false;
-		}
-		if (formType === 'register') {
-			if (formData.username.length > 5) rules[0].valid = true;
-		}
-		if (formType === 'login') rules[0].valid = true;
-		if (formData.email.length > 5) rules[1].valid = true;
-		if (this.validateEmail(formData.email)) rules[2].valid = true;
-		if (formData.password.length > 10) rules[3].valid = true;
-		this.setState({formRules: rules})
-		if (this.allTrue()) this.setState({valid: true});
-	}
-	initRules() {
-		const rules = this.state.formRules;
-		for (const rule of rules) {
-			rule.valid = false;
-		}
-		this.setState({formRules: rules})
-	}
+    allTrue() {
+        for (const rule of this.state.formRules) {
+            if (!rule.valid) return false;
+        }
+        return true;
+    }
+    validateEmail(email) {
+        // eslint-disable-next-line
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    }
+    validateForm() {
+        const formType = this.props.formType;
+        const rules = this.state.formRules;
+        const formData = this.state.formData;
+        this.setState({valid: false});
+        for (const rule of rules) {
+            rule.valid = false;
+        }
+        if (formType === 'register') {
+            if (formData.username.length > 5) rules[0].valid = true;
+        }
+        if (formType === 'login') rules[0].valid = true;
+        if (formData.email.length > 5) rules[1].valid = true;
+        if (this.validateEmail(formData.email)) rules[2].valid = true;
+        if (formData.password.length > 10) rules[3].valid = true;
+        this.setState({formRules: rules})
+        if (this.allTrue()) this.setState({valid: true});
+    }
+    initRules() {
+        const rules = this.state.formRules;
+        for (const rule of rules) {
+            rule.valid = false;
+        }
+        this.setState({formRules: rules})
+    }
     clearForm() {
         this.setState({
             formData: {username: '', email: '', password: ''}
@@ -122,13 +122,13 @@ class Form extends Component {
                 this.props.loginUser(res.data.auth_token);
             })
             .catch((err) => {
-				if (formType === 'login') {
-				  this.props.createMessage('User does not exist.', 'danger')
-				}
-				if (formType === 'register') {
-				  this.props.createMessage('That user already exists.', 'danger')
-				}
-			})
+                if (formType === 'login') {
+                    this.props.createMessage('User does not exist.', 'danger')
+                }
+                if (formType === 'register') {
+                    this.props.createMessage('That user already exists.', 'danger')
+                }
+            })
     }
     render() {
         if (this.props.isAuthenticated) {
